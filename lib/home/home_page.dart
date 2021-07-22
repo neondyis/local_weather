@@ -44,34 +44,85 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: new List.generate(
-                _cityNames.length,
-                (index) => new ListTile(
-                      title: Text('${_cityNames[index]}'),
-                      onTap: () async {
-                        Weather w = await wf
-                            .currentWeatherByCityName('${_cityNames[index]}');
-                        print(w);
-                        Locale myLocale = Localizations.localeOf(context);
-                        print(myLocale);
-                      },
-                    )),
+        drawer: SafeArea(
+          child: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: new List.generate(
+                  _cityNames.length,
+                  (index) => new ListTile(
+                        title: Text('${_cityNames[index]}'),
+                        onTap: () async {
+                          Weather w = await wf
+                              .currentWeatherByCityName('${_cityNames[index]}');
+                          print(w);
+                          Locale myLocale = Localizations.localeOf(context);
+                          print(myLocale);
+                        },
+                      )),
+            ),
           ),
         ),
         appBar: AppBar(
           title: Text(
             'Welcome to the weather app, ${_cityNames.elementAt(_selectedIndex)}',
-            style: TextStyle(fontSize: 15, color: Colors.amber),
+            style: TextStyle(fontSize: 15),
           ),
         ),
-        body: CustomPaint(
-          painter: CurvePainter(),
-          child: Container(),
-        ),
+        body: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width * 0.5,
+                          color: Colors.red[500],
+                          child: Row(
+                            children: <Widget>[CurvedWidget()],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 7,
+                        child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text('LOL')),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
       ),
+    );
+  }
+}
+
+class CurvedWidget extends StatelessWidget {
+  const CurvedWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: CustomPaint(
+            painter: CurvePainter(),
+            size: Size(MediaQuery.of(context).size.width.toDouble(),
+                (MediaQuery.of(context).size.height * 0.3).toDouble()),
+          ),
+        ),
+      ],
     );
   }
 }

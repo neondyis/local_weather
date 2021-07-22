@@ -10,10 +10,10 @@ class CurvePainter extends CustomPainter {
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = 3;
 
-    var startPoint = Offset(0, size.height / 2);
-    var controlPoint1 = Offset(size.width / 2, size.height / 1);
-    var controlPoint2 = Offset(3 * size.width / 4, size.height / 3);
-    var endPoint = Offset(size.width, size.height / 2);
+    var startPoint = Offset(0, size.height);
+    var controlPoint1 = Offset(size.width / 2, size.height / 2);
+    var controlPoint2 = Offset(3 * size.width / 4, size.height / 0.5);
+    var endPoint = Offset(size.width, size.height / 1.5);
 
     var path = Path();
 
