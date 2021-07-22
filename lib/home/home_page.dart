@@ -70,7 +70,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
           ),
         ),
         body: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 5.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -93,7 +93,28 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                         flex: 7,
                         child: Container(
                             width: MediaQuery.of(context).size.width,
-                            child: Text('LOL')),
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      margin: new EdgeInsets.symmetric(
+                                          horizontal: 60.0, vertical: 13.0),
+                                      child: TextButton(
+                                          onPressed: () => {},
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.red,
+                                              onPrimary: Colors.white,
+                                              shape: CircleBorder(),
+                                              padding: EdgeInsets.all(24)),
+                                          child: Text('lol')),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
                       ),
                     ],
                   ),
