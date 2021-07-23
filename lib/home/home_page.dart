@@ -83,7 +83,6 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.width * 0.5,
-                          color: Colors.red[500],
                           child: Row(
                             children: <Widget>[CurvedWidget()],
                           ),
