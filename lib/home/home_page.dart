@@ -16,29 +16,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   int _selectedIndex = 0;
   WeatherFactory wf = new WeatherFactory('3bcedd8fd983c097abd4899a78961b7f',
       language: Language.ENGLISH);
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<String> _cityNames = ['Deventer', 'Apeldoorn', 'Enschede'];
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +48,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
           ),
         ),
         body: Padding(
-            padding: const EdgeInsets.only(top: 5.0),
+            padding: const EdgeInsets.only(top: 0.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -81,8 +59,6 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                       Expanded(
                         flex: 4,
                         child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width * 0.5,
                           child: Row(
                             children: <Widget>[CurvedWidget()],
                           ),
@@ -95,21 +71,24 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                             child: Column(
                               children: [
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      margin: new EdgeInsets.symmetric(
-                                          horizontal: 60.0, vertical: 13.0),
-                                      child: TextButton(
-                                          onPressed: () => {},
-                                          style: ElevatedButton.styleFrom(
-                                              primary: Colors.red,
-                                              onPrimary: Colors.white,
-                                              shape: CircleBorder(),
-                                              padding: EdgeInsets.all(24)),
-                                          child: Text('lol')),
+                                    Expanded(
+                                      flex: 4,
+                                      child: Text(
+                                        "Amsterdam",
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0,
+                                          color: Colors.blue[700],
+                                        ),
+                                      ),
                                     ),
+                                    Expanded(flex: 2, child: HomeBottom()),
                                   ],
                                 ),
                               ],
@@ -122,6 +101,43 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
             )),
       ),
     );
+  }
+}
+
+class HomeBottom extends StatelessWidget {
+  const HomeBottom({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Container(
+          // margin: new EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+          child: CurveButton()),
+    );
+  }
+}
+
+class CurveButton extends StatelessWidget {
+  const CurveButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () => {},
+        style: ElevatedButton.styleFrom(
+            elevation: 0,
+            primary: Colors.white,
+            shape: CircleBorder(),
+            padding: EdgeInsets.all(24)),
+        child: IconButton(
+          icon: const Icon(Icons.add),
+          color: Colors.black.withOpacity(0.5),
+          onPressed: () {},
+        ));
   }
 }
 
