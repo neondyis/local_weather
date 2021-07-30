@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.red, accentColor: Colors.white),
-      home: WeatherHomePage(name: 'Kappa'),
+      home: DefaultTabController(
+          length: 2, child: WeatherHomePage(name: 'Kappa')),
     );
   }
 }

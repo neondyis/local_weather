@@ -18,14 +18,12 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   WeatherFactory wf = new WeatherFactory('3bcedd8fd983c097abd4899a78961b7f',
       language: Language.ENGLISH);
   static const List<String> _cityNames = ['Deventer', 'Apeldoorn', 'Enschede'];
-  late Weather weather;
 
   void initState() {
     super.initState();
 
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      weather = await getWeather(wf);
-      print(weather);
+      await getWeather(wf);
     });
   }
 
@@ -61,7 +59,6 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
         body: Padding(
             padding: const EdgeInsets.only(top: 0.0),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
                   flex: 10,
@@ -71,11 +68,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                         flex: 4,
                         child: Container(
                           child: Row(
-                            children: <Widget>[
-                              CurvedWidget(
-                                weather: weather,
-                              )
-                            ],
+                            children: <Widget>[CurvedWidget()],
                           ),
                         ),
                       ),
@@ -106,6 +99,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                                     Expanded(flex: 2, child: HomeBottom()),
                                   ],
                                 ),
+                                BottomNav(),
                               ],
                             )),
                       ),
@@ -116,6 +110,65 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
             )),
       ),
     );
+  }
+}
+
+class BottomNav extends StatefulWidget {
+  const BottomNav({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _BottomNavState createState() => _BottomNavState();
+}
+
+class _BottomNavState extends State<BottomNav> with TickerProviderStateMixin {
+  late TabController _tabController = TabController(length: 2, vsync: this);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.red,
+            child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment:
+                //     MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 60.0,
+                    child: TabBar(
+                      controller: _tabController,
+                      tabs: const <Widget>[
+                        Tab(
+                          icon: Icon(Icons.cloud_outlined),
+                        ),
+                        Tab(
+                          icon: Icon(Icons.beach_access_sharp),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: const <Widget>[
+                        Center(
+                          child: Text("It's cloudy here"),
+                        ),
+                        Center(
+                          child: Text("It's rainy here"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ])));
   }
 }
 
@@ -184,8 +237,7 @@ class CurveButton extends StatelessWidget {
 }
 
 class CurvedWidget extends StatelessWidget {
-  const CurvedWidget({Key? key, required this.weather}) : super(key: key);
-  final Weather weather;
+  const CurvedWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +249,7 @@ class CurvedWidget extends StatelessWidget {
         size: Size(MediaQuery.of(context).size.width.toDouble(),
             (MediaQuery.of(context).size.height * 0.3).toDouble()),
         child: Center(
-          child: Text('${weather.temperature}'),
+          child: Text('lol'),
         ),
       ),
     );
