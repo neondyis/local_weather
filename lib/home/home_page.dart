@@ -96,7 +96,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                                         ),
                                       ),
                                     ),
-                                    Expanded(flex: 2, child: HomeBottom()),
+                                    Expanded(flex: 2, child: HomeButtom()),
                                   ],
                                 ),
                                 BottomNav(),
@@ -135,7 +135,6 @@ class _BottomNavState extends State<BottomNav> with TickerProviderStateMixin {
     return Expanded(
         child: Container(
             width: MediaQuery.of(context).size.width,
-            color: Colors.red,
             child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment:
@@ -145,12 +144,15 @@ class _BottomNavState extends State<BottomNav> with TickerProviderStateMixin {
                     height: 60.0,
                     child: TabBar(
                       controller: _tabController,
+                      labelColor: Colors.black54,
+                      unselectedLabelColor: Colors.black26,
+                      indicatorColor: Colors.amber,
                       tabs: const <Widget>[
-                        Tab(
-                          icon: Icon(Icons.cloud_outlined),
+                        Text(
+                          'Today',
                         ),
-                        Tab(
-                          icon: Icon(Icons.beach_access_sharp),
+                        Text(
+                          'Tomorrow',
                         ),
                       ],
                     ),
@@ -199,8 +201,8 @@ getWeather(WeatherFactory wf) async {
       _locationData.latitude!, _locationData.longitude!);
 }
 
-class HomeBottom extends StatelessWidget {
-  const HomeBottom({
+class HomeButtom extends StatelessWidget {
+  const HomeButtom({
     Key? key,
   }) : super(key: key);
 
