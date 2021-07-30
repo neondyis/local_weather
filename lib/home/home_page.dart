@@ -18,11 +18,15 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   WeatherFactory wf = new WeatherFactory('3bcedd8fd983c097abd4899a78961b7f',
       language: Language.ENGLISH);
   static const List<String> _cityNames = ['Deventer', 'Apeldoorn', 'Enschede'];
+  late Weather weather;
 
   void initState() {
     super.initState();
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => getWeather(context, wf));
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      weather = await getWeather(wf);
+      print(weather);
+    });
   }
 
   @override
@@ -111,7 +115,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   }
 }
 
-getWeather(BuildContext context, WeatherFactory wf) async {
+getWeather(WeatherFactory wf) async {
   Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -134,9 +138,8 @@ getWeather(BuildContext context, WeatherFactory wf) async {
   }
 
   _locationData = await location.getLocation();
-  Weather weather = await wf.currentWeatherByLocation(
+  return await wf.currentWeatherByLocation(
       _locationData.latitude!, _locationData.longitude!);
-  print(weather);
 }
 
 class HomeBottom extends StatelessWidget {
@@ -183,17 +186,17 @@ class CurvedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: CustomPaint(
-            painter: CurvePainter(),
-            size: Size(MediaQuery.of(context).size.width.toDouble(),
-                (MediaQuery.of(context).size.height * 0.3).toDouble()),
-          ),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: CustomPaint(
+        painter: CurvePainter(),
+        size: Size(MediaQuery.of(context).size.width.toDouble(),
+            (MediaQuery.of(context).size.height * 0.3).toDouble()),
+        child: Center(
+          child: Text('Lol'),
         ),
-      ],
+      ),
     );
   }
 }
