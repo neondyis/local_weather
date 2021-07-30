@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
+import 'package:location/location.dart';
 
 import 'curve_sectioner.dart';
 
@@ -17,6 +18,12 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   WeatherFactory wf = new WeatherFactory('3bcedd8fd983c097abd4899a78961b7f',
       language: Language.ENGLISH);
   static const List<String> _cityNames = ['Deventer', 'Apeldoorn', 'Enschede'];
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => getWeather(context, wf));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +109,34 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
       ),
     );
   }
+}
+
+getWeather(BuildContext context, WeatherFactory wf) async {
+  Location location = new Location();
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
+
+  _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+    _serviceEnabled = await location.requestService();
+    if (!_serviceEnabled) {
+      return;
+    }
+  }
+
+  _permissionGranted = await location.hasPermission();
+  if (_permissionGranted == PermissionStatus.denied) {
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted != PermissionStatus.granted) {
+      return;
+    }
+  }
+
+  _locationData = await location.getLocation();
+  Weather weather = await wf.currentWeatherByLocation(
+      _locationData.latitude!, _locationData.longitude!);
+  print(weather);
 }
 
 class HomeBottom extends StatelessWidget {
