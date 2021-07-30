@@ -71,7 +71,11 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                         flex: 4,
                         child: Container(
                           child: Row(
-                            children: <Widget>[CurvedWidget()],
+                            children: <Widget>[
+                              CurvedWidget(
+                                weather: weather,
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -180,9 +184,8 @@ class CurveButton extends StatelessWidget {
 }
 
 class CurvedWidget extends StatelessWidget {
-  const CurvedWidget({
-    Key? key,
-  }) : super(key: key);
+  const CurvedWidget({Key? key, required this.weather}) : super(key: key);
+  final Weather weather;
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +197,7 @@ class CurvedWidget extends StatelessWidget {
         size: Size(MediaQuery.of(context).size.width.toDouble(),
             (MediaQuery.of(context).size.height * 0.3).toDouble()),
         child: Center(
-          child: Text('Lol'),
+          child: Text('${weather.temperature}'),
         ),
       ),
     );
